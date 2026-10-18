@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
         square.classList.add("square");
 
         square.addEventListener("click", function () {
-            if (gameOver) {
+            if (gameOver || square.textContent !== "") {
                 return;
             }
 
