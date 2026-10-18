@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let gameOver = false;
     const status = document.querySelector("#status");
+    const originalStatus = status.textContent;
+    const newGameButton = document.querySelector(".controls .btn");
 
     const winningLines = [
         [0, 1, 2],
@@ -35,28 +37,28 @@ document.addEventListener("DOMContentLoaded", function () {
     squares.forEach(function (square) {
         square.classList.add("square");
 
-    square.addEventListener("click", function () {
-        if (gameOver) {
-            return;
-        }
+        square.addEventListener("click", function () {
+            if (gameOver) {
+                return;
+            }
 
-        square.textContent = currentPlayer;
-        square.classList.add(currentPlayer);
+            square.textContent = currentPlayer;
+            square.classList.add(currentPlayer);
 
-        if (checkWinner(currentPlayer)) {
-            status.textContent =
-                "Congratulations! " + currentPlayer + " is the Winner!";
-            status.classList.add("you-won");
-            gameOver = true;
-            return;
-        }
+            if (checkWinner(currentPlayer)) {
+                status.textContent =
+                    "Congratulations! " + currentPlayer + " is the Winner!";
+                status.classList.add("you-won");
+                gameOver = true;
+                return;
+            }
 
-        if (currentPlayer === "X") {
-            currentPlayer = "O";
-        } else {
-            currentPlayer = "X";
-        }
-    });
+            if (currentPlayer === "X") {
+                currentPlayer = "O";
+            } else {
+                currentPlayer = "X";
+            }
+        });
 
         square.addEventListener("mouseover", function () {
             square.classList.add("hover");
@@ -66,4 +68,19 @@ document.addEventListener("DOMContentLoaded", function () {
             square.classList.remove("hover");
         });
     });
+
+    newGameButton.addEventListener("click", function () {
+        squares.forEach(function (square) {
+            square.textContent = "";
+            square.classList.remove("X", "O", "hover");
+        });
+
+        status.textContent = originalStatus;
+        status.classList.remove("you-won");
+
+        currentPlayer = "X";
+        gameOver = false;
+    });
+
+
 });
